@@ -281,6 +281,29 @@
             .shop-products-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (max-width: 768px) {
+            .shop-layout {
+                grid-template-columns: 1fr !important;
+                gap: 0;
+            }
+            .shop-sidebar {
+                position: fixed !important;
+                top: 0 !important;
+                left: -100%;
+                width: 300px;
+                height: 100vh;
+                z-index: 500;
+                background: rgba(255, 255, 255, 0.97);
+                backdrop-filter: blur(30px);
+                padding: var(--space-xl);
+                padding-top: 60px;
+                transition: left 0.4s ease;
+                overflow-y: auto;
+                box-shadow: 4px 0 30px rgba(0,0,0,0.15);
+            }
+            .shop-sidebar.active {
+                left: 0;
+            }
+            .sidebar-overlay.active { display: block; }
             .filter-toggle { display: flex; }
             .sidebar-close { display: flex; }
             .shop-products-grid { grid-template-columns: repeat(2, 1fr); }
@@ -290,9 +313,22 @@
                 height: 200px;
                 border-radius: var(--radius-xl) var(--radius-xl) 0 0;
             }
+            .shop-header { 
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .shop-controls {
+                flex-wrap: wrap;
+                justify-content: space-between;
+            }
+            .shop-sort { min-width: 0; flex: 1; }
         }
         @media (max-width: 480px) {
             .shop-products-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+            .view-toggle { display: none; }
+            .shop-sort { width: 100%; }
+            .shop-controls { gap: var(--space-sm); }
+            .pagination button { width: 36px; height: 36px; font-size: 0.85rem; }
         }
     </style>
 </head>
@@ -364,7 +400,7 @@
                     </div>
                 </aside>
 
-                <div class="sidebar-overlay"></div>
+                <div class="sidebar-overlay" onclick="document.querySelector('.shop-sidebar').classList.remove('active'); this.classList.remove('active'); document.body.style.overflow='';"></div>
 
                 <!-- Main Content -->
                 <div class="shop-main">

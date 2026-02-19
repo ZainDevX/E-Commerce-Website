@@ -244,6 +244,55 @@
             margin-top: 4px;
             color: var(--text-light);
         }
+
+        @media (max-width: 768px) {
+            .auth-wrapper {
+                padding: var(--space-lg) 0;
+            }
+            .auth-card {
+                padding: var(--space-lg);
+            }
+        }
+        @media (max-width: 576px) {
+            .auth-wrapper {
+                padding: var(--space-md) 0;
+            }
+            .auth-card {
+                padding: var(--space-md);
+                border-radius: var(--radius-md);
+            }
+            .auth-form h2 { font-size: 1.3rem; }
+            .auth-tabs { margin-bottom: var(--space-lg); }
+            .form-options {
+                flex-wrap: wrap;
+                gap: var(--space-sm);
+            }
+            .social-auth {
+                flex-wrap: wrap;
+            }
+            .social-auth button {
+                flex: 1 1 calc(50% - 8px);
+                min-width: 120px;
+                font-size: 0.8rem;
+                padding: 10px;
+            }
+            .social-auth button span {
+                display: none;
+            }
+            .auth-footer { font-size: 0.78rem; }
+        }
+        @media (max-width: 380px) {
+            .social-auth {
+                flex-direction: column;
+            }
+            .social-auth button {
+                flex: none;
+                width: 100%;
+            }
+            .social-auth button span {
+                display: inline;
+            }
+        }
     </style>
 </head>
 <body>

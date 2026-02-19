@@ -149,8 +149,16 @@
         @media (max-width: 576px) {
             .error-number { font-size: 6rem; }
             .error-content h2 { font-size: 1.3rem; }
+            .error-content p { font-size: 0.9rem; }
             .error-search { flex-direction: column; }
+            .error-search button { width: 100%; text-align: center; }
             .error-floating { display: none; }
+            .error-links { gap: var(--space-sm); }
+            .error-link-card { padding: 10px 16px; font-size: 0.85rem; }
+        }
+        @media (max-width: 380px) {
+            .error-number { font-size: 4.5rem; }
+            .error-content h2 { font-size: 1.1rem; }
         }
     </style>
 </head>

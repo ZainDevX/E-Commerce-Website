@@ -191,8 +191,19 @@
         }
 
         @media (max-width: 1024px) { .wishlist-grid { grid-template-columns: repeat(3, 1fr); } }
-        @media (max-width: 768px) { .wishlist-grid { grid-template-columns: repeat(2, 1fr); } }
-        @media (max-width: 480px) { .wishlist-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) { 
+            .wishlist-grid { grid-template-columns: repeat(2, 1fr); }
+            .wishlist-actions { flex-wrap: wrap; }
+        }
+        @media (max-width: 480px) { 
+            .wishlist-grid { grid-template-columns: 1fr; }
+            .wishlist-card__image { height: 200px; }
+            .wishlist-card__content { padding: var(--space-md); }
+            .wishlist-card__actions .btn { font-size: 0.75rem; padding: 8px; }
+            .wishlist-header-row { gap: var(--space-md); }
+            .wishlist-empty { padding: var(--space-xl); }
+            .wishlist-empty i { font-size: 3rem; }
+        }
     </style>
 </head>
 <body>

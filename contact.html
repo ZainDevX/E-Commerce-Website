@@ -228,6 +228,18 @@
         @media (max-width: 768px) {
             .contact-wrapper { grid-template-columns: 1fr; }
             .form-row { grid-template-columns: 1fr; }
+            .map-section { height: 250px; }
+        }
+        @media (max-width: 576px) {
+            .contact-card { flex-direction: column; text-align: center; }
+            .contact-card__icon { margin: 0 auto; }
+            .social-row { justify-content: center; flex-wrap: wrap; }
+            .map-section { height: 200px; }
+            .map-placeholder i { font-size: 2.5rem; }
+            .map-placeholder p { font-size: 0.85rem; }
+            .faq-question { font-size: 0.9rem; padding: var(--space-md); }
+            .faq-answer p { padding: 0 var(--space-md) var(--space-md); font-size: 0.85rem; }
+            .faq-item.active .faq-answer { max-height: 300px; }
         }
     </style>
 </head>

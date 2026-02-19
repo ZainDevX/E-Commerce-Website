@@ -7,6 +7,7 @@ A modern, fully responsive e-commerce storefront built with pure **HTML**, **CSS
 ![HTML5](https://img.shields.io/badge/HTML5-E34F26?style=for-the-badge&logo=html5&logoColor=white)
 ![CSS3](https://img.shields.io/badge/CSS3-1572B6?style=for-the-badge&logo=css3&logoColor=white)
 ![JavaScript](https://img.shields.io/badge/JavaScript-F7DF1E?style=for-the-badge&logo=javascript&logoColor=black)
+![Responsive](https://img.shields.io/badge/Responsive-Mobile%20%7C%20Tablet%20%7C%20Desktop-10B981?style=for-the-badge)
 
 ---
 
@@ -19,16 +20,35 @@ A modern, fully responsive e-commerce storefront built with pure **HTML**, **CSS
 ## Features
 
 - **Glassmorphism UI** — Frosted glass cards with `backdrop-filter: blur()` and subtle borders
-- **Fully Responsive** — Optimized for desktop, tablet, and mobile devices
+- **Fully Responsive** — Optimized for desktop, tablet, and mobile devices with 4 breakpoints
+- **Mobile-First Navigation** — Hamburger menu with slide-in glass panel and touch-friendly targets
 - **Product Catalog** — 24 products across 6 categories with real Unsplash images
 - **Shopping Cart** — Add, remove, update quantities with LocalStorage persistence
 - **Wishlist** — Save favorite products with persistent storage
-- **Search** — Live search with instant results
+- **Search** — Live search with instant results and mobile-optimized overlay
 - **Checkout Flow** — Multi-step checkout (Shipping → Payment → Review)
 - **User Authentication** — Login & Register UI with form validation
 - **Smooth Animations** — Scroll reveals, hover effects, floating shapes, and more
 - **Professional Color Palette** — Tailwind-inspired brand colors
 - **No Frameworks** — 100% vanilla HTML, CSS, and JavaScript
+
+---
+
+## Responsive Design
+
+| Breakpoint | Layout |
+|------------|--------|
+| **Desktop** (1200px+) | Full 4-column grids, sticky sidebar, hover effects |
+| **Tablet Landscape** (1024px) | 2-column grids, simplified layouts |
+| **Tablet Portrait** (768px) | Off-canvas shop sidebar, hamburger nav, stacked forms |
+| **Mobile** (480px) | Compact cards, full-width elements, touch-optimized |
+
+### Mobile Highlights
+- 📱 Shop filter sidebar converts to a **slide-in drawer** with backdrop overlay
+- 📱 Product cards handle **discount prices gracefully** without overflow
+- 📱 Footer reorganizes into **2-column layout** (Quick Links & Customer Service side by side)
+- 📱 All forms stack vertically with **full-width inputs**
+- 📱 Minimum **36px touch targets** on all interactive elements
 
 ---
 

@@ -253,6 +253,24 @@ function getSearchOverlayCSS() {
         .search-result-item h4 { font-size: 0.95rem; margin-bottom: 2px; }
         .search-result-price { font-size: 0.85rem; color: #2563EB; font-weight: 600; }
         .search-no-results { color: #94A3B8; text-align: center; padding: 20px; }
+
+        @media (max-width: 576px) {
+            .search-overlay { padding-top: 10vh; }
+            .search-overlay-content {
+                padding: 24px;
+                width: 94%;
+                border-radius: 16px;
+                max-height: 80vh;
+                overflow-y: auto;
+            }
+            .search-overlay-content h2 { font-size: 1.2rem; margin-bottom: 14px; }
+            .search-input-wrapper { padding: 12px 16px; }
+            .search-input { font-size: 0.9rem; }
+            .search-result-item { gap: 12px; padding: 10px 12px; }
+            .search-result-img { width: 40px; height: 40px; border-radius: 8px; }
+            .search-result-item h4 { font-size: 0.85rem; }
+            .search-close { width: 34px; height: 34px; top: 12px; right: 12px; font-size: 1.2rem; }
+        }
     </style>
     `;
 }

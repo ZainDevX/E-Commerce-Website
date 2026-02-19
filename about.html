@@ -266,9 +266,16 @@
 
         @media (max-width: 768px) {
             .story-grid { grid-template-columns: 1fr; }
+            .story-image { height: 280px; }
             .stats-grid { grid-template-columns: repeat(2, 1fr); }
             .values-grid { grid-template-columns: 1fr; }
             .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .about-hero h2 { font-size: 1.6rem; }
+            .about-hero p { font-size: 0.95rem; }
+            .story-content h2 { font-size: 1.5rem; }
+            .about-cta h2 { font-size: 1.5rem; }
+            .about-cta p { font-size: 0.95rem; }
+            .stat-card .stat-number { font-size: 2rem; }
             .timeline::before { left: 20px; }
             .timeline-item, .timeline-item:nth-child(odd) {
                 flex-direction: row;
@@ -280,6 +287,16 @@
         }
         @media (max-width: 480px) {
             .team-grid { grid-template-columns: 1fr; }
+            .about-hero h2 { font-size: 1.4rem; }
+            .story-content h2 { font-size: 1.3rem; }
+            .story-image { height: 220px; }
+            .stat-card .stat-number { font-size: 1.6rem; }
+            .stat-card { padding: var(--space-md); }
+            .about-cta { padding: var(--space-xl) var(--space-md); }
+            .about-cta h2 { font-size: 1.3rem; }
+            .about-cta p { font-size: 0.9rem; }
+            .team-card__avatar { width: 80px; height: 80px; }
+            .value-card { padding: var(--space-lg); }
         }
     </style>
 </head>
