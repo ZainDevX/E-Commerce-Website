@@ -1,0 +1,750 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GlassCart — Shop the Future, Today</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* ---- Hero ---- */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            padding-top: 80px;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: var(--gradient-hero);
+            z-index: 0;
+        }
+        .hero .container {
+            position: relative;
+            z-index: 1;
+        }
+        .hero-content {
+            max-width: 650px;
+        }
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            font-weight: var(--fw-medium);
+            color: var(--primary);
+            margin-bottom: var(--space-lg);
+            animation: fadeInDown 0.8s ease;
+        }
+        .hero-badge i { font-size: 1rem; }
+        .hero h1 {
+            font-size: 3.8rem;
+            font-weight: var(--fw-extrabold);
+            line-height: 1.1;
+            margin-bottom: var(--space-lg);
+            color: var(--text-primary);
+            animation: fadeInUp 0.8s ease 0.2s both;
+        }
+        .hero h1 .gradient-text {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero p {
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-xl);
+            animation: fadeInUp 0.8s ease 0.4s both;
+        }
+        .hero-buttons {
+            display: flex;
+            gap: var(--space-md);
+            margin-bottom: var(--space-3xl);
+            animation: fadeInUp 0.8s ease 0.6s both;
+        }
+        .hero-stats {
+            display: flex;
+            gap: var(--space-2xl);
+            animation: fadeInUp 0.8s ease 0.8s both;
+        }
+        .hero-stat {
+            text-align: center;
+        }
+        .hero-stat .number {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: var(--fw-extrabold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+        .hero-visual {
+            position: absolute;
+            right: -5%;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 45%;
+            height: 500px;
+            z-index: 0;
+        }
+        .hero-card {
+            position: absolute;
+            background: var(--glass-bg-strong);
+            backdrop-filter: blur(20px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-xl);
+            padding: var(--space-lg);
+            box-shadow: var(--glass-shadow-lg);
+        }
+        .hero-card-1 {
+            top: 0;
+            right: 80px;
+            width: 240px;
+            animation: float 6s ease-in-out infinite;
+        }
+        .hero-card-2 {
+            bottom: 20px;
+            right: 20px;
+            width: 200px;
+            animation: float 8s ease-in-out infinite 1s;
+        }
+        .hero-card-3 {
+            top: 40%;
+            right: 250px;
+            width: 180px;
+            animation: float 7s ease-in-out infinite 0.5s;
+        }
+        .hero-card-emoji {
+            margin-bottom: 8px;
+            width: 100%;
+            height: 80px;
+            overflow: hidden;
+            border-radius: 10px;
+        }
+        .hero-card-emoji img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .hero-card-name {
+            font-weight: var(--fw-semibold);
+            font-size: 0.9rem;
+            margin-bottom: 4px;
+        }
+        .hero-card-price {
+            font-weight: var(--fw-bold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ---- Marquee ---- */
+        .marquee-section {
+            padding: var(--space-xl) 0;
+            overflow: hidden;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--glass-border);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .marquee-track {
+            display: flex;
+            gap: var(--space-3xl);
+            animation: marquee 30s linear infinite;
+            width: max-content;
+        }
+        .marquee-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            font-weight: var(--fw-semibold);
+            color: var(--text-secondary);
+            white-space: nowrap;
+            font-size: 0.95rem;
+        }
+        .marquee-item i {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        /* ---- Categories ---- */
+        .categories-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+        .category-card {
+            text-align: center;
+            padding: var(--space-2xl) var(--space-lg);
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+        .category-card::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            transition: var(--transition-base);
+            border-radius: inherit;
+        }
+        .category-card:hover::before { opacity: 0.05; }
+        .category-card .cat-icon {
+            font-size: 2.5rem;
+            margin: 0 auto var(--space-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 64px;
+            height: 64px;
+            border-radius: 16px;
+            background: var(--gradient-primary);
+            color: white;
+            transition: var(--transition-base);
+        }
+        .category-card:hover .cat-icon { transform: scale(1.1); box-shadow: 0 8px 25px rgba(37,99,235,0.25); }
+        .category-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: var(--space-xs);
+        }
+        .category-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Products Grid ---- */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+
+        /* ---- Offers Banner ---- */
+        .offers-banner {
+            position: relative;
+            border-radius: var(--radius-xl);
+            padding: var(--space-3xl);
+            overflow: hidden;
+            text-align: center;
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 40%, #10B981 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+        }
+        .offers-banner h2 {
+            font-size: 2.5rem;
+            color: white;
+            margin-bottom: var(--space-sm);
+            -webkit-text-fill-color: white;
+        }
+        .offers-banner p {
+            color: rgba(255,255,255,0.9);
+            font-size: 1.1rem;
+            margin-bottom: var(--space-xl);
+        }
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-lg);
+            margin-bottom: var(--space-xl);
+        }
+        .countdown-item {
+            background: rgba(255,255,255,0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.3);
+            border-radius: var(--radius-lg);
+            padding: var(--space-md) var(--space-lg);
+            min-width: 80px;
+        }
+        .countdown-item .number {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            font-weight: var(--fw-extrabold);
+            color: white;
+            display: block;
+        }
+        .countdown-item .label {
+            font-size: 0.75rem;
+            color: rgba(255,255,255,0.8);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        /* ---- Testimonials ---- */
+        .testimonials-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: var(--space-lg);
+        }
+        .testimonial-card {
+            padding: var(--space-xl);
+        }
+        .testimonial-card .quote {
+            font-size: 1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--space-lg);
+            font-style: italic;
+        }
+        .testimonial-card .customer {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+        }
+        .testimonial-card .avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: var(--radius-circle);
+            background: var(--gradient-sky);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .testimonial-card .customer-info h4 {
+            font-size: 0.95rem;
+            margin-bottom: 2px;
+        }
+        .testimonial-card .customer-info span {
+            font-size: 0.8rem;
+            color: var(--text-light);
+        }
+        .testimonial-stars {
+            margin-bottom: var(--space-md);
+            color: #F59E0B;
+        }
+
+        /* ---- Features ---- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+        .feature-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+        .feature-card i {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .feature-card h3 {
+            font-size: 1rem;
+            margin-bottom: var(--space-sm);
+        }
+        .feature-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* ---- Newsletter ---- */
+        .newsletter-section {
+            position: relative;
+            overflow: hidden;
+        }
+        .newsletter-card {
+            max-width: 700px;
+            margin: 0 auto;
+            text-align: center;
+            padding: var(--space-3xl);
+        }
+        .newsletter-card h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .newsletter-card p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-xl);
+        }
+        .newsletter-form-lg {
+            display: flex;
+            gap: var(--space-sm);
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        .newsletter-form-lg input {
+            flex: 1;
+            padding: 16px 24px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            font-size: 1rem;
+            color: var(--text-primary);
+        }
+        .newsletter-form-lg input:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-visual { display: none; }
+            .hero-content { max-width: 100%; }
+            .products-grid { grid-template-columns: repeat(3, 1fr); }
+            .features-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .hero h1 { font-size: 2.5rem; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .products-grid { grid-template-columns: repeat(2, 1fr); }
+            .testimonials-grid { grid-template-columns: 1fr; }
+            .hero-buttons { flex-direction: column; }
+            .hero-buttons .btn { text-align: center; }
+            .newsletter-form-lg { flex-direction: column; }
+        }
+        @media (max-width: 480px) {
+            .hero h1 { font-size: 2rem; }
+            .categories-grid { grid-template-columns: repeat(2, 1fr); }
+            .products-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+            .features-grid { grid-template-columns: 1fr; }
+            .countdown { flex-wrap: wrap; }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <div id="nav-placeholder"></div>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+
+        <div class="container">
+            <div class="hero-content">
+                <span class="hero-badge">
+                    <i class="ri-sparkling-line"></i>
+                    New Collection 2026
+                </span>
+                <h1>Shop the <span class="gradient-text">Future</span>, Today</h1>
+                <p>Discover premium products curated just for you. From cutting-edge electronics to sustainable fashion — all with free shipping on orders over $100.</p>
+                <div class="hero-buttons">
+                    <a href="shop.html" class="btn btn-primary btn-lg">
+                        <i class="ri-shopping-bag-line"></i> Shop Now
+                    </a>
+                    <a href="#categories" class="btn btn-glass btn-lg">
+                        Explore Categories <i class="ri-arrow-right-line"></i>
+                    </a>
+                </div>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <div class="number" data-count="15000" data-suffix="+">0</div>
+                        <div class="label">Happy Customers</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="number" data-count="2500" data-suffix="+">0</div>
+                        <div class="label">Products</div>
+                    </div>
+                    <div class="hero-stat">
+                        <div class="number" data-count="99" data-suffix="%">0</div>
+                        <div class="label">Satisfaction</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Floating Product Cards -->
+        <div class="hero-visual">
+            <div class="hero-card hero-card-1">
+                <div class="hero-card-emoji"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=240&h=160&fit=crop&q=80" alt="Headphones"></div>
+                <div class="hero-card-name">ANC Headphones</div>
+                <div class="hero-card-price">$89.99</div>
+            </div>
+            <div class="hero-card hero-card-2">
+                <div class="hero-card-emoji"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=200&h=160&fit=crop&q=80" alt="Smart Watch"></div>
+                <div class="hero-card-name">Smart Watch</div>
+                <div class="hero-card-price">$199.99</div>
+            </div>
+            <div class="hero-card hero-card-3">
+                <div class="hero-card-emoji"><img src="https://images.unsplash.com/photo-1525966222134-fcfa99b8ae77?w=180&h=160&fit=crop&q=80" alt="Sneakers"></div>
+                <div class="hero-card-name">Sneakers</div>
+                <div class="hero-card-price">$59.99</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Trust Marquee -->
+    <section class="marquee-section">
+        <div class="marquee-track">
+            <div class="marquee-item"><i class="ri-truck-line"></i> Free Shipping Over $100</div>
+            <div class="marquee-item"><i class="ri-shield-check-line"></i> Secure Payments</div>
+            <div class="marquee-item"><i class="ri-refresh-line"></i> 30-Day Returns</div>
+            <div class="marquee-item"><i class="ri-customer-service-2-line"></i> 24/7 Support</div>
+            <div class="marquee-item"><i class="ri-award-line"></i> Premium Quality</div>
+            <div class="marquee-item"><i class="ri-leaf-line"></i> Eco-Friendly</div>
+            <div class="marquee-item"><i class="ri-truck-line"></i> Free Shipping Over $100</div>
+            <div class="marquee-item"><i class="ri-shield-check-line"></i> Secure Payments</div>
+            <div class="marquee-item"><i class="ri-refresh-line"></i> 30-Day Returns</div>
+            <div class="marquee-item"><i class="ri-customer-service-2-line"></i> 24/7 Support</div>
+            <div class="marquee-item"><i class="ri-award-line"></i> Premium Quality</div>
+            <div class="marquee-item"><i class="ri-leaf-line"></i> Eco-Friendly</div>
+        </div>
+    </section>
+
+    <!-- Categories Section -->
+    <section class="section" id="categories">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Shop by Category</h2>
+                <p>Find exactly what you're looking for in our curated collection of categories</p>
+            </div>
+            <div class="categories-grid stagger-children" id="categoriesGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Trending Products -->
+    <section class="section" style="background: rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Trending Products</h2>
+                <p>Our most popular picks that customers can't stop raving about</p>
+            </div>
+            <div class="products-grid" id="trendingGrid">
+                <!-- Populated by JS -->
+            </div>
+            <div class="text-center" style="margin-top: var(--space-2xl);">
+                <a href="shop.html" class="btn btn-outline btn-lg reveal">
+                    View All Products <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Special Offers Banner -->
+    <section class="section">
+        <div class="container">
+            <div class="offers-banner reveal-scale">
+                <h2><i class="ri-fire-fill" style="color:#EF4444;"></i> Super Sale — Up to 40% Off</h2>
+                <p>Don't miss out! Grab your favorites before the timer runs out</p>
+                <div class="countdown" id="countdown">
+                    <div class="countdown-item">
+                        <span class="number" id="days">00</span>
+                        <span class="label">Days</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="number" id="hours">00</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="number" id="minutes">00</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div class="countdown-item">
+                        <span class="number" id="seconds">00</span>
+                        <span class="label">Seconds</span>
+                    </div>
+                </div>
+                <a href="shop.html" class="btn btn-glass btn-lg" style="border-color: rgba(255,255,255,0.4); color: white;">
+                    Shop the Sale <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- New Arrivals -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>New Arrivals</h2>
+                <p>Fresh drops you'll love — just landed in store</p>
+            </div>
+            <div class="products-grid" id="newArrivalsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="section" style="background: rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>What Customers Say</h2>
+                <p>Real reviews from real customers who love GlassCart</p>
+            </div>
+            <div class="testimonials-grid" id="testimonialsGrid">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Features -->
+    <section class="section">
+        <div class="container">
+            <div class="features-grid stagger-children" id="featuresGrid">
+                <div class="feature-card glass-card reveal">
+                    <i class="ri-truck-line"></i>
+                    <h3>Free Shipping</h3>
+                    <p>Free delivery on all orders over $100. Fast and reliable worldwide.</p>
+                </div>
+                <div class="feature-card glass-card reveal delay-1">
+                    <i class="ri-shield-check-line"></i>
+                    <h3>Secure Payment</h3>
+                    <p>Your transactions are protected with 256-bit SSL encryption.</p>
+                </div>
+                <div class="feature-card glass-card reveal delay-2">
+                    <i class="ri-refresh-line"></i>
+                    <h3>Easy Returns</h3>
+                    <p>Not satisfied? Return within 30 days for a full refund.</p>
+                </div>
+                <div class="feature-card glass-card reveal delay-3">
+                    <i class="ri-customer-service-2-line"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Our team is here to help you anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter -->
+    <section class="section newsletter-section">
+        <div class="container">
+            <div class="newsletter-card glass-card reveal">
+                <div class="floating-shapes" style="overflow:hidden; border-radius: inherit;">
+                    <div class="floating-shape" style="width:150px;height:150px;top:-40px;right:-40px;background:var(--gradient-primary);opacity:0.08;"></div>
+                    <div class="floating-shape" style="width:100px;height:100px;bottom:-30px;left:-30px;background:var(--gradient-secondary);opacity:0.08;"></div>
+                </div>
+                <h2>Stay in the Loop</h2>
+                <p>Subscribe to our newsletter and get 15% off your first order plus early access to sales!</p>
+                <form class="newsletter-form-lg" onsubmit="event.preventDefault(); showToast('Subscribed successfully! Check your email for 15% off code.', 'success'); this.reset();">
+                    <input type="email" placeholder="Enter your email address" required>
+                    <button type="submit" class="btn btn-primary btn-lg">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <div id="footer-placeholder"></div>
+
+    <!-- Scripts -->
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Inject nav & footer
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            
+            // Re-init after injection
+            initNavbar();
+            initScrollTop();
+            initMobileMenu();
+            setActiveNavLink();
+            updateCartBadge();
+            updateWishlistBadge();
+
+            // Populate categories
+            const catGrid = document.getElementById('categoriesGrid');
+            if (catGrid) {
+                catGrid.innerHTML = categories.map(cat => `
+                    <a href="shop.html?category=${cat.slug}" class="category-card glass-card">
+                        <div class="cat-icon"><i class="${cat.icon}"></i></div>
+                        <h3>${cat.name}</h3>
+                        <p>${cat.count} Products</p>
+                    </a>
+                `).join('');
+            }
+
+            // Populate trending products (hot + best rated)
+            const trendingGrid = document.getElementById('trendingGrid');
+            if (trendingGrid) {
+                const trending = products
+                    .sort((a, b) => b.reviews - a.reviews)
+                    .slice(0, 8);
+                trendingGrid.innerHTML = trending.map(p => createProductCardHTML(p)).join('');
+            }
+
+            // Populate new arrivals
+            const newGrid = document.getElementById('newArrivalsGrid');
+            if (newGrid) {
+                const newItems = products.filter(p => p.badge === 'New').slice(0, 4);
+                newGrid.innerHTML = newItems.map(p => createProductCardHTML(p)).join('');
+            }
+
+            // Populate testimonials
+            const testGrid = document.getElementById('testimonialsGrid');
+            if (testGrid) {
+                testGrid.innerHTML = testimonials.map(t => `
+                    <div class="testimonial-card glass-card reveal">
+                        <div class="testimonial-stars">
+                            ${'<i class="ri-star-fill"></i>'.repeat(t.rating)}
+                        </div>
+                        <p class="quote">"${t.text}"</p>
+                        <div class="customer">
+                            <div class="avatar"><img src="${t.avatar}" alt="${t.name}" style="width:44px;height:44px;border-radius:50%;object-fit:cover;"></div>
+                            <div class="customer-info">
+                                <h4>${t.name}</h4>
+                                <span>${t.role}</span>
+                            </div>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            // Countdown Timer (3 days from now)
+            const endDate = new Date();
+            endDate.setDate(endDate.getDate() + 3);
+            
+            function updateCountdown() {
+                const now = new Date();
+                const diff = endDate - now;
+                
+                if (diff <= 0) return;
+                
+                const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+                const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+                const s = Math.floor((diff % (1000 * 60)) / 1000);
+                
+                document.getElementById('days').textContent = String(d).padStart(2, '0');
+                document.getElementById('hours').textContent = String(h).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(m).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(s).padStart(2, '0');
+            }
+            
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+
+            // Re-init scroll reveal for dynamically added elements
+            initScrollReveal();
+            initCounters();
+        });
+    </script>
+</body>
+</html>

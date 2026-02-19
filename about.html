@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us — GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        /* Mission */
+        .about-hero {
+            text-align: center;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .about-hero h2 {
+            font-size: 2.2rem;
+            margin-bottom: var(--space-lg);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .about-hero p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        /* Story */
+        .story-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-3xl);
+            align-items: center;
+        }
+        .story-image {
+            border-radius: var(--radius-xl);
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            position: relative;
+            overflow: hidden;
+        }
+        .story-content h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-lg);
+        }
+        .story-content p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+            margin-bottom: var(--space-md);
+        }
+
+        /* Stats */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+        .stat-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+        .stat-card .stat-icon {
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            background: var(--gradient-primary);
+            color: white;
+        }
+        .stat-card .stat-number {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            font-weight: var(--fw-extrabold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: block;
+        }
+        .stat-card .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            margin-top: 4px;
+        }
+
+        /* Values */
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+        .value-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+        .value-card i {
+            font-size: 2.5rem;
+            margin-bottom: var(--space-md);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .value-card h3 {
+            font-size: 1.1rem;
+            margin-bottom: var(--space-sm);
+        }
+        .value-card p {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Team */
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-lg);
+        }
+        .team-card {
+            text-align: center;
+            padding: var(--space-xl);
+        }
+        .team-card__avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-circle);
+            margin: 0 auto var(--space-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+        }
+        .team-card h4 {
+            font-size: 1.05rem;
+            margin-bottom: 4px;
+        }
+        .team-card .role {
+            font-size: 0.85rem;
+            color: var(--primary);
+            font-weight: var(--fw-medium);
+            margin-bottom: var(--space-md);
+        }
+        .team-card p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .team-card .social-links {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-md);
+        }
+        .team-card .social-links a {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+        }
+        .team-card .social-links a:hover {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+
+        /* Timeline */
+        .timeline {
+            position: relative;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100%;
+            background: var(--gradient-primary);
+            opacity: 0.3;
+        }
+        .timeline-item {
+            display: flex;
+            margin-bottom: var(--space-2xl);
+            position: relative;
+        }
+        .timeline-item:nth-child(odd) {
+            flex-direction: row-reverse;
+            text-align: right;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            background: var(--gradient-primary);
+            border: 3px solid var(--bg-primary);
+            z-index: 1;
+        }
+        .timeline-content {
+            width: 45%;
+            padding: var(--space-lg);
+        }
+        .timeline-content h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .timeline-content .year {
+            font-size: 0.8rem;
+            color: var(--primary);
+            font-weight: var(--fw-bold);
+            margin-bottom: var(--space-sm);
+        }
+        .timeline-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* CTA Banner */
+        .about-cta {
+            text-align: center;
+            padding: var(--space-3xl) var(--space-xl);
+            background: linear-gradient(135deg, #2563EB 0%, #3B82F6 40%, #10B981 100%);
+            background-size: 200% 200%;
+            animation: gradientShift 6s ease infinite;
+            border-radius: var(--radius-xl);
+            color: white;
+        }
+        .about-cta h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-md);
+            color: white;
+            -webkit-text-fill-color: white;
+        }
+        .about-cta p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            margin-bottom: var(--space-xl);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        @media (max-width: 768px) {
+            .story-grid { grid-template-columns: 1fr; }
+            .stats-grid { grid-template-columns: repeat(2, 1fr); }
+            .values-grid { grid-template-columns: 1fr; }
+            .team-grid { grid-template-columns: repeat(2, 1fr); }
+            .timeline::before { left: 20px; }
+            .timeline-item, .timeline-item:nth-child(odd) {
+                flex-direction: row;
+                text-align: left;
+                padding-left: 50px;
+            }
+            .timeline-dot { left: 20px; }
+            .timeline-content { width: 100%; }
+        }
+        @media (max-width: 480px) {
+            .team-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="page-header">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span>About Us</span>
+            </div>
+            <h1>About GlassCart</h1>
+            <p>Where quality meets innovation in online shopping</p>
+        </div>
+    </section>
+
+    <!-- Mission -->
+    <section class="section">
+        <div class="container">
+            <div class="about-hero reveal">
+                <h2>Our Mission</h2>
+                <p>At GlassCart, we believe shopping should be effortless, enjoyable, and accessible to everyone. We curate the best products from around the world, ensuring premium quality at fair prices. Our mission is to redefine the online shopping experience through innovation, sustainability, and exceptional service.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Story -->
+    <section class="section" style="background:rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="story-grid">
+                <div class="story-image glass-card reveal-left" style="overflow:hidden;">
+                    <img src="https://images.unsplash.com/photo-1556742049-0cfed4f6a45d?w=600&h=400&fit=crop&q=80" alt="Our Story" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+                </div>
+                <div class="story-content reveal-right">
+                    <h2>Our Story</h2>
+                    <p>Founded in 2022, GlassCart started with a simple idea: make premium products accessible to everyone, everywhere. What began as a small passion project has grown into a trusted destination for thousands of customers worldwide.</p>
+                    <p>We handpick each product in our collection, working with ethical manufacturers and sustainable suppliers. Our team of experts tests every item before it reaches our store.</p>
+                    <p>Today, we're proud to serve over 15,000 happy customers across 50+ countries, and we're just getting started.</p>
+                    <a href="shop.html" class="btn btn-primary" style="margin-top:var(--space-md);">
+                        <i class="ri-shopping-bag-line"></i> Explore Our Products
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>By the Numbers</h2>
+                <p>Our growth tells the story of customer trust and satisfaction</p>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card glass-card reveal delay-1">
+                    <div class="stat-icon"><i class="ri-global-line"></i></div>
+                    <span class="stat-number" data-count="50" data-suffix="+">0</span>
+                    <span class="stat-label">Countries Served</span>
+                </div>
+                <div class="stat-card glass-card reveal delay-2">
+                    <div class="stat-icon"><i class="ri-user-heart-line"></i></div>
+                    <span class="stat-number" data-count="15000" data-suffix="+">0</span>
+                    <span class="stat-label">Happy Customers</span>
+                </div>
+                <div class="stat-card glass-card reveal delay-3">
+                    <div class="stat-icon"><i class="ri-box-3-line"></i></div>
+                    <span class="stat-number" data-count="2500" data-suffix="+">0</span>
+                    <span class="stat-label">Products Available</span>
+                </div>
+                <div class="stat-card glass-card reveal delay-4">
+                    <div class="stat-icon"><i class="ri-star-smile-line"></i></div>
+                    <span class="stat-number" data-count="99" data-suffix="%">0</span>
+                    <span class="stat-label">Satisfaction Rate</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Values -->
+    <section class="section" style="background:rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Values</h2>
+                <p>The principles that guide everything we do</p>
+            </div>
+            <div class="values-grid">
+                <div class="value-card glass-card reveal delay-1">
+                    <i class="ri-heart-2-line"></i>
+                    <h3>Quality First</h3>
+                    <p>Every product is carefully vetted to meet our high standards. We never compromise on quality, because you deserve the best.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-2">
+                    <i class="ri-leaf-line"></i>
+                    <h3>Sustainability</h3>
+                    <p>We partner with eco-conscious brands and use sustainable packaging. Our goal is to minimize our environmental footprint.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-3">
+                    <i class="ri-group-line"></i>
+                    <h3>Community</h3>
+                    <p>We believe in building meaningful connections with our customers. Your feedback shapes our future direction.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-1">
+                    <i class="ri-lightbulb-line"></i>
+                    <h3>Innovation</h3>
+                    <p>We constantly push boundaries to bring you the latest and greatest products. Technology drives our shopping experience.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-2">
+                    <i class="ri-shield-star-line"></i>
+                    <h3>Trust</h3>
+                    <p>Transparency and honesty are at our core. Secure payments, honest reviews, and reliable delivery — always.</p>
+                </div>
+                <div class="value-card glass-card reveal delay-3">
+                    <i class="ri-global-line"></i>
+                    <h3>Accessibility</h3>
+                    <p>Premium products shouldn't break the bank. We work to keep prices fair and shipping affordable worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline -->
+    <section class="section">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Our Journey</h2>
+                <p>Key milestones that shaped who we are today</p>
+            </div>
+            <div class="timeline">
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="year">2022</span>
+                        <h4>The Beginning</h4>
+                        <p>GlassCart was founded with just 50 products and a dream to bring quality goods to everyone.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="year">2023</span>
+                        <h4>Growth Phase</h4>
+                        <p>Reached 5,000 customers and expanded to 500+ products across 4 categories.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="year">2024</span>
+                        <h4>Going Global</h4>
+                        <p>Launched international shipping to 30+ countries and introduced our sustainability initiative.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="year">2025</span>
+                        <h4>Community Milestone</h4>
+                        <p>Surpassed 15,000 happy customers with a 99% satisfaction rate. Added Beauty and Sports categories.</p>
+                    </div>
+                </div>
+                <div class="timeline-item reveal">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content glass-card">
+                        <span class="year">2026</span>
+                        <h4>The Future</h4>
+                        <p>Expanding to 50+ countries, launching exclusive collections, and investing in AI-powered recommendations.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team -->
+    <section class="section" style="background:rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Meet the Team</h2>
+                <p>The brilliant minds behind GlassCart</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-card glass-card reveal delay-1">
+                    <div class="team-card__avatar" style="overflow:hidden;">
+                        <img src="https://i.pravatar.cc/100?u=alex-rivera" alt="Alex Rivera" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <h4>Alex Rivera</h4>
+                    <span class="role">CEO & Founder</span>
+                    <p>Visionary leader with 15 years in e-commerce and retail.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="ri-twitter-x-fill"></i></a>
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                    </div>
+                </div>
+                <div class="team-card glass-card reveal delay-2">
+                    <div class="team-card__avatar" style="overflow:hidden;">
+                        <img src="https://i.pravatar.cc/100?u=maya-patel" alt="Maya Patel" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <h4>Maya Patel</h4>
+                    <span class="role">Head of Design</span>
+                    <p>Creative genius behind our beautiful user experience.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="ri-twitter-x-fill"></i></a>
+                        <a href="#"><i class="ri-dribbble-fill"></i></a>
+                    </div>
+                </div>
+                <div class="team-card glass-card reveal delay-3">
+                    <div class="team-card__avatar" style="overflow:hidden;">
+                        <img src="https://i.pravatar.cc/100?u=james-chen" alt="James Chen" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <h4>James Chen</h4>
+                    <span class="role">CTO</span>
+                    <p>Tech wizard ensuring our platform is fast and secure.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="ri-github-fill"></i></a>
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                    </div>
+                </div>
+                <div class="team-card glass-card reveal delay-4">
+                    <div class="team-card__avatar" style="overflow:hidden;">
+                        <img src="https://i.pravatar.cc/100?u=sofia-andersson" alt="Sofia Andersson" style="width:100%;height:100%;object-fit:cover;">
+                    </div>
+                    <h4>Sofia Andersson</h4>
+                    <span class="role">Product Manager</span>
+                    <p>Curates our catalog with an eye for quality and trends.</p>
+                    <div class="social-links">
+                        <a href="#"><i class="ri-twitter-x-fill"></i></a>
+                        <a href="#"><i class="ri-linkedin-fill"></i></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA -->
+    <section class="section">
+        <div class="container">
+            <div class="about-cta reveal-scale">
+                <h2>Ready to Experience the Difference?</h2>
+                <p>Join thousands of happy customers and discover why GlassCart is the future of online shopping.</p>
+                <a href="shop.html" class="btn btn-glass btn-lg" style="border-color:rgba(255,255,255,0.4);color:white;">
+                    Start Shopping <i class="ri-arrow-right-line"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+            initScrollReveal(); initCounters();
+        });
+    </script>
+</body>
+</html>

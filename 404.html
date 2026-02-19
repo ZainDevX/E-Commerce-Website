@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 — Page Not Found | GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .error-page {
+            min-height: 80vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            padding: var(--space-2xl);
+        }
+
+        /* Floating decorations */
+        .error-floating {
+            position: absolute;
+            animation: float 6s ease-in-out infinite;
+            font-size: 2.5rem;
+            opacity: 0.3;
+            pointer-events: none;
+        }
+        .error-floating:nth-child(1) { top: 10%; left: 8%; animation-delay: 0s; font-size: 3rem; }
+        .error-floating:nth-child(2) { top: 20%; right: 12%; animation-delay: 1s; }
+        .error-floating:nth-child(3) { bottom: 15%; left: 15%; animation-delay: 2s; }
+        .error-floating:nth-child(4) { bottom: 25%; right: 8%; animation-delay: 0.5s; font-size: 2rem; }
+        .error-floating:nth-child(5) { top: 50%; left: 5%; animation-delay: 3s; font-size: 1.8rem; }
+        .error-floating:nth-child(6) { top: 40%; right: 5%; animation-delay: 1.5s; font-size: 2.2rem; }
+
+        .error-content {
+            text-align: center;
+            max-width: 560px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* 404 number */
+        .error-number {
+            font-family: var(--font-heading);
+            font-size: 10rem;
+            font-weight: var(--fw-extrabold);
+            line-height: 1;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            background-size: 200% 200%;
+            animation: gradientShift 4s ease infinite, popIn 0.6s ease;
+            margin-bottom: var(--space-md);
+            text-shadow: none;
+            position: relative;
+        }
+        .error-number::after {
+            content: '';
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 120px;
+            height: 6px;
+            border-radius: 3px;
+            background: var(--gradient-primary);
+            opacity: 0.4;
+        }
+
+        .error-content h2 {
+            font-size: 1.8rem;
+            margin-bottom: var(--space-md);
+            animation: fadeInUp 0.6s ease 0.2s both;
+        }
+        .error-content p {
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: var(--space-2xl);
+            animation: fadeInUp 0.6s ease 0.4s both;
+        }
+
+        /* Search */
+        .error-search {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-2xl);
+            animation: fadeInUp 0.6s ease 0.5s both;
+        }
+        .error-search input {
+            flex: 1;
+            padding: 14px 20px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            font-family: var(--font-body);
+            font-size: 0.95rem;
+            color: var(--text-primary);
+            transition: var(--transition-base);
+        }
+        .error-search input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
+        .error-search button {
+            padding: 14px 24px;
+        }
+
+        /* Links */
+        .error-links {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: var(--space-md);
+            animation: fadeInUp 0.6s ease 0.6s both;
+        }
+        .error-link-card {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 12px 20px;
+            text-decoration: none;
+            color: var(--text-primary);
+            transition: var(--transition-base);
+        }
+        .error-link-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-lg);
+            color: var(--primary);
+        }
+        .error-link-card i {
+            font-size: 1.2rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .error-link-card span {
+            font-weight: var(--fw-medium);
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 576px) {
+            .error-number { font-size: 6rem; }
+            .error-content h2 { font-size: 1.3rem; }
+            .error-search { flex-direction: column; }
+            .error-floating { display: none; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="error-page">
+        <!-- Floating items -->
+        <span class="error-floating"><i class="ri-shopping-cart-line"></i></span>
+        <span class="error-floating"><i class="ri-box-3-line"></i></span>
+        <span class="error-floating"><i class="ri-gift-line"></i></span>
+        <span class="error-floating"><i class="ri-shopping-bag-line"></i></span>
+        <span class="error-floating"><i class="ri-vip-diamond-line"></i></span>
+        <span class="error-floating"><i class="ri-sparkling-line"></i></span>
+
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+
+        <div class="error-content">
+            <div class="error-number">404</div>
+            <h2>Oops! Page Not Found</h2>
+            <p>The page you're looking for seems to have wandered off. Don't worry — let's get you back on track.</p>
+
+            <div class="error-search">
+                <input type="text" id="errorSearch" placeholder="Search for products..." onkeydown="if(event.key==='Enter') searchFromError()">
+                <button class="btn btn-primary" onclick="searchFromError()">
+                    <i class="ri-search-line"></i> Search
+                </button>
+            </div>
+
+            <div class="error-links">
+                <a href="index.html" class="error-link-card glass-card">
+                    <i class="ri-home-4-line"></i>
+                    <span>Home</span>
+                </a>
+                <a href="shop.html" class="error-link-card glass-card">
+                    <i class="ri-shopping-bag-line"></i>
+                    <span>Shop</span>
+                </a>
+                <a href="cart.html" class="error-link-card glass-card">
+                    <i class="ri-shopping-cart-2-line"></i>
+                    <span>Cart</span>
+                </a>
+                <a href="contact.html" class="error-link-card glass-card">
+                    <i class="ri-customer-service-2-line"></i>
+                    <span>Support</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+        });
+
+        function searchFromError() {
+            const query = document.getElementById('errorSearch').value.trim();
+            if (query) {
+                window.location.href = 'shop.html?search=' + encodeURIComponent(query);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account — GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .auth-wrapper {
+            max-width: 500px;
+            margin: 0 auto;
+            padding: var(--space-2xl) 0;
+        }
+        .auth-card {
+            padding: var(--space-2xl) var(--space-2xl) var(--space-xl);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Tabs */
+        .auth-tabs {
+            display: flex;
+            background: var(--glass-bg);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            margin-bottom: var(--space-2xl);
+            border: 1px solid var(--glass-border);
+        }
+        .auth-tab {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
+            font-weight: var(--fw-semibold);
+            font-size: 0.9rem;
+            cursor: pointer;
+            border-radius: var(--radius-sm);
+            transition: var(--transition-base);
+            border: none;
+            background: transparent;
+            color: var(--text-secondary);
+            font-family: var(--font-body);
+        }
+        .auth-tab.active {
+            background: var(--gradient-primary);
+            color: white;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Forms */
+        .auth-form { display: none; }
+        .auth-form.active { display: block; animation: fadeInUp 0.4s ease; }
+        .auth-form h2 {
+            font-size: 1.5rem;
+            margin-bottom: 4px;
+        }
+        .auth-form > p {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: var(--space-xl);
+        }
+        .form-group {
+            margin-bottom: var(--space-lg);
+            position: relative;
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: var(--fw-semibold);
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+        }
+        .input-icon-wrapper {
+            position: relative;
+        }
+        .input-icon-wrapper i {
+            position: absolute;
+            left: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            font-size: 1rem;
+        }
+        .input-icon-wrapper input {
+            padding-left: 42px !important;
+        }
+        .form-group input {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: var(--transition-base);
+            box-sizing: border-box;
+        }
+        .form-group input:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
+        .form-group input.error {
+            border-color: var(--accent);
+        }
+        .form-error {
+            font-size: 0.8rem;
+            color: var(--accent);
+            margin-top: 4px;
+            display: none;
+        }
+        .form-group.has-error .form-error { display: block; }
+
+        /* Password toggle */
+        .password-toggle {
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1rem;
+            padding: 4px;
+        }
+        .password-toggle:hover { color: var(--primary); }
+
+        /* Options row */
+        .form-options {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-xl);
+            font-size: 0.85rem;
+        }
+        .form-options label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            color: var(--text-secondary);
+        }
+        .form-options label input[type="checkbox"] {
+            accent-color: var(--primary);
+            width: 16px;
+            height: 16px;
+        }
+        .form-options a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: var(--fw-medium);
+        }
+        .form-options a:hover { text-decoration: underline; }
+
+        .auth-submit {
+            width: 100%;
+            padding: 14px;
+            font-size: 1rem;
+        }
+
+        /* Divider */
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: var(--space-md);
+            margin: var(--space-xl) 0;
+            color: var(--text-light);
+            font-size: 0.85rem;
+        }
+        .auth-divider::before,
+        .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--glass-border);
+        }
+
+        /* Social */
+        .social-auth {
+            display: flex;
+            gap: var(--space-md);
+        }
+        .social-auth button {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-sm);
+            padding: 12px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.875rem;
+            font-weight: var(--fw-medium);
+            color: var(--text-primary);
+            transition: var(--transition-base);
+        }
+        .social-auth button:hover {
+            border-color: var(--primary);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+        .social-auth button i { font-size: 1.1rem; }
+
+        /* Terms */
+        .auth-footer {
+            text-align: center;
+            margin-top: var(--space-xl);
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+        .auth-footer a {
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        /* Password strength */
+        .password-strength {
+            height: 4px;
+            background: var(--glass-border);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+        .password-strength-bar {
+            height: 100%;
+            width: 0%;
+            border-radius: 2px;
+            transition: width 0.3s, background 0.3s;
+        }
+        .strength-weak { width: 33%; background: #EF4444; }
+        .strength-medium { width: 66%; background: #ffa751; }
+        .strength-strong { width: 100%; background: #10B981; }
+        .strength-text {
+            font-size: 0.78rem;
+            margin-top: 4px;
+            color: var(--text-light);
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="page-header">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span>Account</span>
+            </div>
+            <h1>Your Account</h1>
+            <p>Sign in or create an account to get started</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div class="auth-wrapper">
+                <div class="auth-card glass-card reveal-scale">
+                    <!-- Tabs -->
+                    <div class="auth-tabs">
+                        <button class="auth-tab active" data-tab="login">Sign In</button>
+                        <button class="auth-tab" data-tab="register">Create Account</button>
+                    </div>
+
+                    <!-- Login Form -->
+                    <div class="auth-form active" id="loginForm">
+                        <h2>Welcome Back</h2>
+                        <p>Enter your credentials to access your account</p>
+
+                        <form id="loginFormEl" novalidate>
+                            <div class="form-group">
+                                <label for="login-email">Email Address</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-mail-line"></i>
+                                    <input type="email" id="login-email" placeholder="your@email.com" required>
+                                </div>
+                                <span class="form-error">Please enter a valid email address</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="login-password">Password</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-lock-2-line"></i>
+                                    <input type="password" id="login-password" placeholder="••••••••" required>
+                                    <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                                        <i class="ri-eye-off-line"></i>
+                                    </button>
+                                </div>
+                                <span class="form-error">Password is required</span>
+                            </div>
+                            <div class="form-options">
+                                <label>
+                                    <input type="checkbox" checked> Remember me
+                                </label>
+                                <a href="#">Forgot Password?</a>
+                            </div>
+                            <button type="submit" class="btn btn-primary auth-submit">
+                                <i class="ri-login-box-line"></i> Sign In
+                            </button>
+                        </form>
+
+                        <div class="auth-divider">or continue with</div>
+
+                        <div class="social-auth">
+                            <button type="button"><i class="ri-google-fill"></i> Google</button>
+                            <button type="button"><i class="ri-apple-fill"></i> Apple</button>
+                            <button type="button"><i class="ri-facebook-fill"></i> Facebook</button>
+                        </div>
+
+                        <div class="auth-footer">
+                            Don't have an account? <a href="#" onclick="switchTab('register')">Create one</a>
+                        </div>
+                    </div>
+
+                    <!-- Register Form -->
+                    <div class="auth-form" id="registerForm">
+                        <h2>Create Account</h2>
+                        <p>Join GlassCart for the best shopping experience</p>
+
+                        <form id="registerFormEl" novalidate>
+                            <div class="form-group">
+                                <label for="reg-name">Full Name</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-user-3-line"></i>
+                                    <input type="text" id="reg-name" placeholder="John Doe" required>
+                                </div>
+                                <span class="form-error">Name is required</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-email">Email Address</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-mail-line"></i>
+                                    <input type="email" id="reg-email" placeholder="your@email.com" required>
+                                </div>
+                                <span class="form-error">Please enter a valid email address</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-password">Password</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-lock-2-line"></i>
+                                    <input type="password" id="reg-password" placeholder="Min 8 characters" required minlength="8" oninput="checkPasswordStrength(this.value)">
+                                    <button type="button" class="password-toggle" onclick="togglePassword(this)">
+                                        <i class="ri-eye-off-line"></i>
+                                    </button>
+                                </div>
+                                <div class="password-strength">
+                                    <div class="password-strength-bar" id="strengthBar"></div>
+                                </div>
+                                <span class="strength-text" id="strengthText"></span>
+                                <span class="form-error">Password must be at least 8 characters</span>
+                            </div>
+                            <div class="form-group">
+                                <label for="reg-confirm">Confirm Password</label>
+                                <div class="input-icon-wrapper">
+                                    <i class="ri-lock-check-line"></i>
+                                    <input type="password" id="reg-confirm" placeholder="Re-enter password" required>
+                                </div>
+                                <span class="form-error">Passwords do not match</span>
+                            </div>
+                            <div class="form-options">
+                                <label>
+                                    <input type="checkbox" id="reg-terms" required>
+                                    I agree to the <a href="#">Terms</a> & <a href="#">Privacy Policy</a>
+                                </label>
+                            </div>
+                            <button type="submit" class="btn btn-primary auth-submit">
+                                <i class="ri-user-add-line"></i> Create Account
+                            </button>
+                        </form>
+
+                        <div class="auth-divider">or sign up with</div>
+
+                        <div class="social-auth">
+                            <button type="button"><i class="ri-google-fill"></i> Google</button>
+                            <button type="button"><i class="ri-apple-fill"></i> Apple</button>
+                            <button type="button"><i class="ri-facebook-fill"></i> Facebook</button>
+                        </div>
+
+                        <div class="auth-footer">
+                            Already have an account? <a href="#" onclick="switchTab('login')">Sign in</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+            initScrollReveal();
+
+            // Tab switching
+            document.querySelectorAll('.auth-tab').forEach(tab => {
+                tab.addEventListener('click', () => switchTab(tab.dataset.tab));
+            });
+
+            // Login submit
+            document.getElementById('loginFormEl').addEventListener('submit', e => {
+                e.preventDefault();
+                let valid = true;
+                const email = document.getElementById('login-email');
+                const pw = document.getElementById('login-password');
+                clearErrors();
+                if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+                    email.closest('.form-group').classList.add('has-error');
+                    valid = false;
+                }
+                if (!pw.value) {
+                    pw.closest('.form-group').classList.add('has-error');
+                    valid = false;
+                }
+                if (valid) {
+                    showToast('Signed in successfully! (UI Demo)', 'success');
+                }
+            });
+
+            // Register submit
+            document.getElementById('registerFormEl').addEventListener('submit', e => {
+                e.preventDefault();
+                let valid = true;
+                const name = document.getElementById('reg-name');
+                const email = document.getElementById('reg-email');
+                const pw = document.getElementById('reg-password');
+                const confirm = document.getElementById('reg-confirm');
+                clearErrors();
+                if (!name.value.trim()) { name.closest('.form-group').classList.add('has-error'); valid = false; }
+                if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) { email.closest('.form-group').classList.add('has-error'); valid = false; }
+                if (!pw.value || pw.value.length < 8) { pw.closest('.form-group').classList.add('has-error'); valid = false; }
+                if (pw.value !== confirm.value) { confirm.closest('.form-group').classList.add('has-error'); valid = false; }
+                if (!document.getElementById('reg-terms').checked) {
+                    showToast('Please agree to the terms and privacy policy', 'error');
+                    valid = false;
+                }
+                if (valid) {
+                    showToast('Account created successfully! (UI Demo)', 'success');
+                    switchTab('login');
+                }
+            });
+        });
+
+        function switchTab(tab) {
+            document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
+            document.querySelector(`.auth-tab[data-tab="${tab}"]`).classList.add('active');
+            document.getElementById(tab + 'Form').classList.add('active');
+            clearErrors();
+        }
+
+        function clearErrors() {
+            document.querySelectorAll('.form-group').forEach(g => g.classList.remove('has-error'));
+        }
+
+        function togglePassword(btn) {
+            const input = btn.parentElement.querySelector('input');
+            const icon = btn.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'ri-eye-line';
+            } else {
+                input.type = 'password';
+                icon.className = 'ri-eye-off-line';
+            }
+        }
+
+        function checkPasswordStrength(password) {
+            const bar = document.getElementById('strengthBar');
+            const text = document.getElementById('strengthText');
+            bar.className = 'password-strength-bar';
+            if (password.length === 0) { text.textContent = ''; return; }
+            let score = 0;
+            if (password.length >= 8) score++;
+            if (/[A-Z]/.test(password) && /[a-z]/.test(password)) score++;
+            if (/\d/.test(password) && /[^A-Za-z0-9]/.test(password)) score++;
+            if (score <= 1) { bar.classList.add('strength-weak'); text.textContent = 'Weak'; }
+            else if (score === 2) { bar.classList.add('strength-medium'); text.textContent = 'Medium'; }
+            else { bar.classList.add('strength-strong'); text.textContent = 'Strong'; }
+        }
+    </script>
+</body>
+</html>

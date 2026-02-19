@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop — GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .shop-layout {
+            display: grid;
+            grid-template-columns: 280px 1fr;
+            gap: var(--space-xl);
+            align-items: start;
+        }
+
+        /* Sidebar */
+        .shop-sidebar {
+            position: sticky;
+            top: 100px;
+        }
+        .sidebar-card {
+            padding: var(--space-xl);
+            margin-bottom: var(--space-lg);
+        }
+        .sidebar-card h3 {
+            font-size: 1rem;
+            margin-bottom: var(--space-lg);
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+        }
+        .sidebar-card h3 i {
+            color: var(--primary);
+        }
+        .sidebar-close {
+            display: none;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Category List */
+        .category-list label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 10px 0;
+            cursor: pointer;
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+        }
+        .category-list label:hover { color: var(--primary); }
+        .category-list input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .category-count {
+            margin-left: auto;
+            font-size: 0.8rem;
+            background: var(--glass-bg);
+            padding: 2px 10px;
+            border-radius: var(--radius-full);
+            color: var(--text-light);
+        }
+
+        /* Price Filter */
+        .price-inputs {
+            display: flex;
+            gap: var(--space-sm);
+            align-items: center;
+        }
+        .price-inputs input {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-sm);
+            font-size: 0.85rem;
+            text-align: center;
+        }
+        .price-inputs span {
+            color: var(--text-light);
+        }
+
+        /* Rating Filter */
+        .rating-filter label {
+            display: flex;
+            align-items: center;
+            gap: var(--space-sm);
+            padding: 8px 0;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        .rating-filter label:hover { opacity: 0.8; }
+        .rating-filter input[type="radio"] {
+            accent-color: var(--primary);
+            cursor: pointer;
+        }
+        .rating-stars {
+            color: #F59E0B;
+            font-size: 0.9rem;
+        }
+        .rating-label {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        /* Shop Header */
+        .shop-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-xl);
+            flex-wrap: wrap;
+            gap: var(--space-md);
+        }
+        .shop-results {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+        }
+        .shop-results strong {
+            color: var(--text-primary);
+        }
+        .shop-controls {
+            display: flex;
+            gap: var(--space-md);
+            align-items: center;
+        }
+        .filter-toggle {
+            display: none;
+        }
+        .shop-sort {
+            padding: 10px 16px;
+            background: var(--glass-bg-strong);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-full);
+            font-size: 0.85rem;
+            color: var(--text-primary);
+            cursor: pointer;
+            min-width: 180px;
+        }
+        .view-toggle {
+            display: flex;
+            gap: 4px;
+            background: var(--glass-bg);
+            border-radius: var(--radius-sm);
+            padding: 4px;
+            border: 1px solid var(--glass-border);
+        }
+        .view-toggle button {
+            width: 36px;
+            height: 36px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 6px;
+            font-size: 1rem;
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+        }
+        .view-toggle button.active {
+            background: var(--gradient-primary);
+            color: white;
+        }
+
+        /* Products Grid */
+        .shop-products-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-lg);
+        }
+        .shop-products-grid.list-view {
+            grid-template-columns: 1fr;
+        }
+        .shop-products-grid.list-view .product-card {
+            display: flex;
+            flex-direction: row;
+        }
+        .shop-products-grid.list-view .product-card__image {
+            width: 240px;
+            min-height: 200px;
+            height: auto;
+            border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+        }
+        .shop-products-grid.list-view .product-card__info {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        /* Pagination */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-sm);
+            margin-top: var(--space-2xl);
+        }
+        .pagination button {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: var(--fw-medium);
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+            cursor: pointer;
+        }
+        .pagination button:hover,
+        .pagination button.active {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+        }
+        .pagination button:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        /* Active Tags */
+        .active-filters {
+            display: flex;
+            gap: var(--space-sm);
+            flex-wrap: wrap;
+            margin-bottom: var(--space-lg);
+        }
+        .filter-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 14px;
+            background: rgba(37, 99, 235, 0.08);
+            border: 1px solid rgba(37, 99, 235, 0.15);
+            border-radius: var(--radius-full);
+            font-size: 0.8rem;
+            color: var(--primary);
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        .filter-tag:hover {
+            background: rgba(37, 99, 235, 0.15);
+        }
+        .filter-tag i { font-size: 0.9rem; }
+        .clear-filters {
+            font-size: 0.8rem;
+            color: var(--accent);
+            cursor: pointer;
+            padding: 6px 0;
+            font-weight: var(--fw-medium);
+        }
+
+        .sidebar-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.3);
+            backdrop-filter: blur(4px);
+            z-index: 499;
+        }
+        .sidebar-overlay.active { display: block; }
+
+        @media (max-width: 1024px) {
+            .shop-products-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .filter-toggle { display: flex; }
+            .sidebar-close { display: flex; }
+            .shop-products-grid { grid-template-columns: repeat(2, 1fr); }
+            .shop-products-grid.list-view .product-card { flex-direction: column; }
+            .shop-products-grid.list-view .product-card__image {
+                width: 100%;
+                height: 200px;
+                border-radius: var(--radius-xl) var(--radius-xl) 0 0;
+            }
+        }
+        @media (max-width: 480px) {
+            .shop-products-grid { grid-template-columns: repeat(2, 1fr); gap: var(--space-md); }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <!-- Page Header -->
+    <section class="page-header">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span>Shop</span>
+            </div>
+            <h1>Our Products</h1>
+            <p>Discover our curated collection of premium products</p>
+        </div>
+    </section>
+
+    <!-- Shop Content -->
+    <section class="section">
+        <div class="container">
+            <div class="shop-layout">
+                <!-- Sidebar -->
+                <aside class="shop-sidebar">
+                    <button class="sidebar-close" onclick="this.closest('.shop-sidebar').classList.remove('active'); document.querySelector('.sidebar-overlay')?.classList.remove('active'); document.body.style.overflow='';">
+                        <i class="ri-close-line"></i>
+                    </button>
+
+                    <div class="sidebar-card glass-card">
+                        <h3><i class="ri-list-check-2"></i> Categories</h3>
+                        <div class="category-list" id="categoryFilters">
+                            <!-- Populated by JS -->
+                        </div>
+                    </div>
+
+                    <div class="sidebar-card glass-card">
+                        <h3><i class="ri-money-dollar-circle-line"></i> Price Range</h3>
+                        <div class="price-inputs">
+                            <input type="number" id="priceMin" placeholder="Min" min="0" value="0">
+                            <span>—</span>
+                            <input type="number" id="priceMax" placeholder="Max" min="0" value="500">
+                        </div>
+                        <button class="btn btn-primary btn-sm" style="width:100%;margin-top:16px;" onclick="applyFilters()">Apply</button>
+                    </div>
+
+                    <div class="sidebar-card glass-card">
+                        <h3><i class="ri-star-line"></i> Rating</h3>
+                        <div class="rating-filter">
+                            <label>
+                                <input type="radio" name="rating" value="0" checked>
+                                <span class="rating-label">All Ratings</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="rating" value="4">
+                                <span class="rating-stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-line"></i></span>
+                                <span class="rating-label">& up</span>
+                            </label>
+                            <label>
+                                <input type="radio" name="rating" value="4.5">
+                                <span class="rating-stars"><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-fill"></i><i class="ri-star-half-fill"></i></span>
+                                <span class="rating-label">& up</span>
+                            </label>
+                        </div>
+                    </div>
+                </aside>
+
+                <div class="sidebar-overlay"></div>
+
+                <!-- Main Content -->
+                <div class="shop-main">
+                    <div class="shop-header">
+                        <span class="shop-results">Showing <strong id="resultCount">0</strong> products</span>
+                        <div class="shop-controls">
+                            <button class="btn btn-glass btn-sm filter-toggle" onclick="document.querySelector('.shop-sidebar').classList.add('active'); document.querySelector('.sidebar-overlay').classList.add('active'); document.body.style.overflow='hidden';">
+                                <i class="ri-filter-3-line"></i> Filters
+                            </button>
+                            <select class="shop-sort" id="sortSelect" onchange="applyFilters()">
+                                <option value="popular">Most Popular</option>
+                                <option value="newest">Newest</option>
+                                <option value="price-low">Price: Low to High</option>
+                                <option value="price-high">Price: High to Low</option>
+                                <option value="rating">Highest Rated</option>
+                            </select>
+                            <div class="view-toggle">
+                                <button class="active" onclick="setView('grid', this)" title="Grid View"><i class="ri-grid-fill"></i></button>
+                                <button onclick="setView('list', this)" title="List View"><i class="ri-list-unordered"></i></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="active-filters" id="activeFilters"></div>
+
+                    <div class="shop-products-grid" id="shopGrid">
+                        <!-- Populated by JS -->
+                    </div>
+
+                    <div class="pagination" id="pagination">
+                        <!-- Populated by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        const ITEMS_PER_PAGE = 9;
+        let currentPage = 1;
+        let filteredProducts = [...products];
+
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+
+            // Populate category filters
+            const catFilters = document.getElementById('categoryFilters');
+            catFilters.innerHTML = categories.map(cat => `
+                <label>
+                    <input type="checkbox" value="${cat.slug}" onchange="applyFilters()">
+                    ${cat.name}
+                    <span class="category-count">${cat.count}</span>
+                </label>
+            `).join('');
+
+            // Check URL params for pre-selected category
+            const urlCat = getUrlParam('category');
+            if (urlCat) {
+                const checkbox = catFilters.querySelector(`input[value="${urlCat}"]`);
+                if (checkbox) checkbox.checked = true;
+            }
+
+            // Rating filter change
+            document.querySelectorAll('input[name="rating"]').forEach(r => {
+                r.addEventListener('change', applyFilters);
+            });
+
+            applyFilters();
+            initScrollReveal();
+        });
+
+        function applyFilters() {
+            const selectedCats = Array.from(document.querySelectorAll('#categoryFilters input:checked')).map(cb => cb.value);
+            const minPrice = parseFloat(document.getElementById('priceMin').value) || 0;
+            const maxPrice = parseFloat(document.getElementById('priceMax').value) || Infinity;
+            const minRating = parseFloat(document.querySelector('input[name="rating"]:checked')?.value) || 0;
+            const sort = document.getElementById('sortSelect').value;
+
+            filteredProducts = products.filter(p => {
+                if (selectedCats.length && !selectedCats.includes(p.category)) return false;
+                if (p.price < minPrice || p.price > maxPrice) return false;
+                if (p.rating < minRating) return false;
+                return true;
+            });
+
+            // Sort
+            switch (sort) {
+                case 'price-low': filteredProducts.sort((a, b) => a.price - b.price); break;
+                case 'price-high': filteredProducts.sort((a, b) => b.price - a.price); break;
+                case 'rating': filteredProducts.sort((a, b) => b.rating - a.rating); break;
+                case 'newest': filteredProducts.sort((a, b) => b.id - a.id); break;
+                case 'popular': filteredProducts.sort((a, b) => b.reviews - a.reviews); break;
+            }
+
+            currentPage = 1;
+            renderProducts();
+            renderActiveFilters(selectedCats, minPrice, maxPrice, minRating);
+        }
+
+        function renderProducts() {
+            const grid = document.getElementById('shopGrid');
+            const start = (currentPage - 1) * ITEMS_PER_PAGE;
+            const pageProducts = filteredProducts.slice(start, start + ITEMS_PER_PAGE);
+
+            document.getElementById('resultCount').textContent = filteredProducts.length;
+
+            if (pageProducts.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state" style="grid-column: 1/-1;">
+                        <div class="empty-state__icon"><i class="ri-search-line" style="font-size:4rem;color:var(--primary);"></i></div>
+                        <h3 class="empty-state__title">No products found</h3>
+                        <p class="empty-state__text">Try adjusting your filters to find what you're looking for.</p>
+                        <button class="btn btn-primary" onclick="clearAllFilters()">Clear Filters</button>
+                    </div>
+                `;
+            } else {
+                grid.innerHTML = pageProducts.map(p => createProductCardHTML(p)).join('');
+            }
+
+            renderPagination();
+            initScrollReveal();
+        }
+
+        function renderPagination() {
+            const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+            const pagination = document.getElementById('pagination');
+
+            if (totalPages <= 1) { pagination.innerHTML = ''; return; }
+
+            let html = `<button onclick="changePage(${currentPage - 1})" ${currentPage === 1 ? 'disabled' : ''}><i class="ri-arrow-left-s-line"></i></button>`;
+
+            for (let i = 1; i <= totalPages; i++) {
+                html += `<button onclick="changePage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
+            }
+
+            html += `<button onclick="changePage(${currentPage + 1})" ${currentPage === totalPages ? 'disabled' : ''}><i class="ri-arrow-right-s-line"></i></button>`;
+            pagination.innerHTML = html;
+        }
+
+        function changePage(page) {
+            const totalPages = Math.ceil(filteredProducts.length / ITEMS_PER_PAGE);
+            if (page < 1 || page > totalPages) return;
+            currentPage = page;
+            renderProducts();
+            window.scrollTo({ top: 300, behavior: 'smooth' });
+        }
+
+        function renderActiveFilters(cats, min, max, rating) {
+            const container = document.getElementById('activeFilters');
+            let tags = '';
+
+            cats.forEach(cat => {
+                const label = categories.find(c => c.slug === cat)?.name || cat;
+                tags += `<span class="filter-tag" onclick="removeCatFilter('${cat}')">${label} <i class="ri-close-line"></i></span>`;
+            });
+            if (min > 0) tags += `<span class="filter-tag" onclick="document.getElementById('priceMin').value=0;applyFilters();">Min: $${min} <i class="ri-close-line"></i></span>`;
+            if (max < 500) tags += `<span class="filter-tag" onclick="document.getElementById('priceMax').value=500;applyFilters();">Max: $${max} <i class="ri-close-line"></i></span>`;
+            if (rating > 0) tags += `<span class="filter-tag" onclick="document.querySelector('input[name=rating][value=\\'0\\']').checked=true;applyFilters();">${rating}★ & up <i class="ri-close-line"></i></span>`;
+
+            if (tags) tags += `<span class="clear-filters" onclick="clearAllFilters()">Clear all</span>`;
+            container.innerHTML = tags;
+        }
+
+        function removeCatFilter(slug) {
+            const cb = document.querySelector(`#categoryFilters input[value="${slug}"]`);
+            if (cb) cb.checked = false;
+            applyFilters();
+        }
+
+        function clearAllFilters() {
+            document.querySelectorAll('#categoryFilters input').forEach(cb => cb.checked = false);
+            document.getElementById('priceMin').value = 0;
+            document.getElementById('priceMax').value = 500;
+            document.querySelector('input[name="rating"][value="0"]').checked = true;
+            document.getElementById('sortSelect').value = 'popular';
+            applyFilters();
+        }
+
+        function setView(view, btn) {
+            const grid = document.getElementById('shopGrid');
+            document.querySelectorAll('.view-toggle button').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            if (view === 'list') {
+                grid.classList.add('list-view');
+            } else {
+                grid.classList.remove('list-view');
+            }
+        }
+    </script>
+</body>
+</html>

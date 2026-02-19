@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cart — GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-xl);
+            align-items: start;
+        }
+        .cart-items { display: flex; flex-direction: column; gap: var(--space-md); }
+
+        .cart-item {
+            display: flex;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+            align-items: center;
+        }
+        .cart-item__image {
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        .cart-item__info { flex: 1; }
+        .cart-item__name {
+            font-weight: var(--fw-semibold);
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .cart-item__name a { color: var(--text-primary); }
+        .cart-item__name a:hover { color: var(--primary); }
+        .cart-item__meta {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-bottom: var(--space-md);
+        }
+        .cart-item__meta span { margin-right: var(--space-md); }
+        .cart-item__bottom {
+            display: flex;
+            align-items: center;
+            gap: var(--space-lg);
+        }
+        .cart-item__price {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: var(--fw-bold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-left: auto;
+        }
+        .cart-item__remove {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+            padding: var(--space-sm);
+        }
+        .cart-item__remove:hover { color: var(--warm); }
+
+        /* Order Summary */
+        .order-summary {
+            position: sticky;
+            top: 100px;
+            padding: var(--space-xl);
+        }
+        .order-summary h3 {
+            font-size: 1.2rem;
+            margin-bottom: var(--space-xl);
+            padding-bottom: var(--space-md);
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: var(--space-md);
+            font-size: 0.95rem;
+        }
+        .summary-row .label { color: var(--text-secondary); }
+        .summary-row .value { font-weight: var(--fw-semibold); }
+        .summary-row.total {
+            border-top: 2px solid var(--glass-border);
+            padding-top: var(--space-md);
+            margin-top: var(--space-md);
+            font-size: 1.2rem;
+        }
+        .summary-row.total .value {
+            font-weight: var(--fw-bold);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        .summary-row.savings .value { color: var(--secondary); }
+        .free-shipping-note {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 16px;
+            background: rgba(16, 185, 129, 0.08);
+            border-radius: var(--radius-md);
+            font-size: 0.85rem;
+            color: #059669;
+            margin: var(--space-lg) 0;
+        }
+        .free-shipping-note i { font-size: 1.1rem; }
+
+        /* Coupon */
+        .coupon-form {
+            display: flex;
+            gap: var(--space-sm);
+            margin-bottom: var(--space-lg);
+        }
+        .coupon-form input {
+            flex: 1;
+            padding: 12px 16px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            font-size: 0.9rem;
+        }
+        .coupon-form button {
+            padding: 12px 20px;
+            background: var(--gradient-secondary);
+            color: white;
+            border-radius: var(--radius-md);
+            font-weight: var(--fw-semibold);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+        }
+        .coupon-form button:hover {
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.35);
+        }
+
+        .summary-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+        .summary-actions .btn { width: 100%; text-align: center; }
+
+        .clear-cart-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-light);
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: var(--transition-base);
+            margin-top: var(--space-md);
+        }
+        .clear-cart-btn:hover { color: var(--warm); }
+
+        @media (max-width: 768px) {
+            .cart-item { flex-direction: column; text-align: center; }
+            .cart-item__image { width: 100%; height: 150px; }
+            .cart-item__bottom { flex-direction: column; width: 100%; }
+            .cart-item__price { margin-left: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="page-header">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span>Shopping Cart</span>
+            </div>
+            <h1>Shopping Cart</h1>
+            <p id="cartCountHeader">0 items in your cart</p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="container">
+            <div id="cartContent">
+                <!-- Populated by JS -->
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+            renderCart();
+        });
+
+        window.addEventListener('cartUpdated', renderCart);
+
+        function renderCart() {
+            const cart = getCart();
+            const container = document.getElementById('cartContent');
+            const countHeader = document.getElementById('cartCountHeader');
+            countHeader.textContent = `${getCartCount()} items in your cart`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-state__icon"><i class="ri-shopping-cart-line" style="font-size:4rem;color:var(--primary);"></i></div>
+                        <h3 class="empty-state__title">Your cart is empty</h3>
+                        <p class="empty-state__text">Looks like you haven't added anything to your cart yet.</p>
+                        <a href="shop.html" class="btn btn-primary btn-lg">
+                            <i class="ri-shopping-bag-line"></i> Start Shopping
+                        </a>
+                    </div>
+                `;
+                return;
+            }
+
+            const subtotal = getCartSubtotal();
+            const shipping = getShippingCost(subtotal);
+            const tax = getTax(subtotal);
+            const total = subtotal + shipping + tax;
+
+            // Calculate total savings
+            let savings = 0;
+            cart.forEach(item => {
+                const p = products.find(pr => pr.id === item.productId);
+                if (p && p.originalPrice) {
+                    savings += (p.originalPrice - p.price) * item.quantity;
+                }
+            });
+
+            container.innerHTML = `
+                <div class="cart-layout">
+                    <div>
+                        <div class="cart-items" id="cartItems">
+                            ${cart.map(item => {
+                                const p = products.find(pr => pr.id === item.productId);
+                                if (!p) return '';
+                                const itemTotal = p.price * item.quantity;
+                                return `
+                                    <div class="cart-item glass-card reveal" data-id="${p.id}" data-color="${item.selectedColor}" data-size="${item.selectedSize}">
+                                        <div class="cart-item__image" style="background:${p.gradient};">
+                                            <img src="${p.image}" alt="${p.name}" style="width:100%;height:100%;object-fit:cover;border-radius:inherit;">
+                                        </div>
+                                        <div class="cart-item__info">
+                                            <h4 class="cart-item__name"><a href="product.html?id=${p.id}">${p.name}</a></h4>
+                                            <div class="cart-item__meta">
+                                                ${item.selectedColor ? `<span>Color: <span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:${item.selectedColor};vertical-align:middle;"></span></span>` : ''}
+                                                ${item.selectedSize ? `<span>Size: ${item.selectedSize}</span>` : ''}
+                                            </div>
+                                            <div class="cart-item__bottom">
+                                                <div class="quantity-control">
+                                                    <button onclick="updateItem(${p.id}, ${item.quantity - 1}, '${item.selectedColor}', '${item.selectedSize}')"><i class="ri-subtract-line"></i></button>
+                                                    <input type="number" value="${item.quantity}" readonly>
+                                                    <button onclick="updateItem(${p.id}, ${item.quantity + 1}, '${item.selectedColor}', '${item.selectedSize}')"><i class="ri-add-line"></i></button>
+                                                </div>
+                                                <span class="cart-item__price">$${itemTotal.toFixed(2)}</span>
+                                                <button class="cart-item__remove" onclick="removeItem(${p.id}, '${item.selectedColor}', '${item.selectedSize}')" title="Remove">
+                                                    <i class="ri-delete-bin-6-line"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                `;
+                            }).join('')}
+                        </div>
+                        <button class="clear-cart-btn" onclick="clearCart(); renderCart();">
+                            <i class="ri-delete-bin-line"></i> Clear Cart
+                        </button>
+                    </div>
+
+                    <div class="order-summary glass-card-strong">
+                        <h3>Order Summary</h3>
+                        <div class="summary-row">
+                            <span class="label">Subtotal</span>
+                            <span class="value">$${subtotal.toFixed(2)}</span>
+                        </div>
+                        ${savings > 0 ? `
+                        <div class="summary-row savings">
+                            <span class="label">You Save</span>
+                            <span class="value">-$${savings.toFixed(2)}</span>
+                        </div>
+                        ` : ''}
+                        <div class="summary-row">
+                            <span class="label">Shipping</span>
+                            <span class="value">${shipping === 0 ? 'Free!' : '$' + shipping.toFixed(2)}</span>
+                        </div>
+                        <div class="summary-row">
+                            <span class="label">Tax (8%)</span>
+                            <span class="value">$${tax.toFixed(2)}</span>
+                        </div>
+                        ${subtotal < 100 ? `
+                        <div class="free-shipping-note">
+                            <i class="ri-truck-line"></i>
+                            Add $${(100 - subtotal).toFixed(2)} more for free shipping!
+                        </div>
+                        ` : `
+                        <div class="free-shipping-note">
+                            <i class="ri-checkbox-circle-fill"></i>
+                            You qualify for free shipping!
+                        </div>
+                        `}
+
+                        <div class="coupon-form">
+                            <input type="text" placeholder="Coupon code" id="couponInput">
+                            <button onclick="applyCoupon()">Apply</button>
+                        </div>
+
+                        <div class="summary-row total">
+                            <span class="label">Total</span>
+                            <span class="value">$${total.toFixed(2)}</span>
+                        </div>
+
+                        <div class="summary-actions">
+                            <a href="checkout.html" class="btn btn-primary btn-lg">
+                                <i class="ri-secure-payment-line"></i> Proceed to Checkout
+                            </a>
+                            <a href="shop.html" class="btn btn-glass">
+                                <i class="ri-arrow-left-line"></i> Continue Shopping
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            `;
+
+            initScrollReveal();
+        }
+
+        function updateItem(id, qty, color, size) {
+            color = color === 'null' ? null : color;
+            size = size === 'null' ? null : size;
+            updateCartQuantity(id, qty, color, size);
+            renderCart();
+        }
+
+        function removeItem(id, color, size) {
+            color = color === 'null' ? null : color;
+            size = size === 'null' ? null : size;
+            removeFromCart(id, color, size);
+            renderCart();
+        }
+
+        function applyCoupon() {
+            const code = document.getElementById('couponInput')?.value.trim();
+            if (!code) return;
+            if (code.toUpperCase() === 'GLASS15') {
+                showToast('Coupon applied! 15% discount', 'success');
+            } else {
+                showToast('Invalid coupon code', 'error');
+            }
+        }
+    </script>
+</body>
+</html>

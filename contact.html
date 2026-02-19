@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us — GlassCart</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/animations.css">
+    <link rel="stylesheet" href="css/responsive.css">
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@4.1.0/fonts/remixicon.css" rel="stylesheet">
+    <style>
+        .contact-wrapper {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-2xl);
+            align-items: start;
+        }
+
+        /* Info Side */
+        .contact-info-section h2 {
+            font-size: 2rem;
+            margin-bottom: var(--space-sm);
+        }
+        .contact-info-section > p {
+            color: var(--text-secondary);
+            margin-bottom: var(--space-2xl);
+            line-height: 1.7;
+        }
+        .contact-cards {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-lg);
+        }
+        .contact-card {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-lg);
+            padding: var(--space-lg);
+        }
+        .contact-card__icon {
+            width: 52px;
+            height: 52px;
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            flex-shrink: 0;
+            color: white;
+        }
+        .contact-card h4 {
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+        .contact-card p, .contact-card a {
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            text-decoration: none;
+            line-height: 1.6;
+        }
+        .contact-card a:hover { color: var(--primary); }
+
+        /* Social */
+        .social-row {
+            display: flex;
+            gap: var(--space-md);
+            margin-top: var(--space-2xl);
+        }
+        .social-row a {
+            width: 42px;
+            height: 42px;
+            border-radius: var(--radius-circle);
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            transition: var(--transition-base);
+        }
+        .social-row a:hover {
+            background: var(--gradient-primary);
+            color: white;
+            border-color: transparent;
+            transform: translateY(-3px);
+        }
+
+        /* Form Side */
+        .contact-form-card {
+            padding: var(--space-2xl);
+        }
+        .contact-form-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: var(--space-xl);
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-md);
+        }
+        .form-group {
+            margin-bottom: var(--space-lg);
+        }
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            font-weight: var(--fw-semibold);
+            margin-bottom: var(--space-xs);
+            color: var(--text-primary);
+        }
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid var(--glass-border);
+            border-radius: var(--radius-md);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            font-family: var(--font-body);
+            font-size: 0.9rem;
+            color: var(--text-primary);
+            transition: var(--transition-base);
+            box-sizing: border-box;
+        }
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(37,99,235,0.12);
+        }
+        .form-group textarea {
+            resize: vertical;
+            min-height: 130px;
+        }
+        .contact-submit {
+            width: 100%;
+        }
+
+        /* Map */
+        .map-section {
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+            height: 320px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: linear-gradient(135deg, rgba(37,99,235,0.08), rgba(16,185,129,0.08));
+            position: relative;
+        }
+        .map-placeholder {
+            text-align: center;
+        }
+        .map-placeholder i {
+            font-size: 4rem;
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: var(--space-md);
+            display: block;
+        }
+        .map-placeholder p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* FAQ */
+        .faq-list {
+            max-width: 800px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-md);
+        }
+        .faq-item {
+            padding: 0;
+            overflow: hidden;
+        }
+        .faq-question {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-lg) var(--space-xl);
+            cursor: pointer;
+            font-weight: var(--fw-semibold);
+            font-size: 0.95rem;
+            transition: var(--transition-base);
+        }
+        .faq-question:hover { color: var(--primary); }
+        .faq-question i {
+            font-size: 1.2rem;
+            transition: transform 0.3s ease;
+        }
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px;
+        }
+        .faq-answer p {
+            padding: 0 var(--space-xl) var(--space-lg);
+            font-size: 0.9rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Toast */
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: var(--space-2xl);
+        }
+        .form-success.show { display: block; }
+        .form-success i {
+            font-size: 3rem;
+            color: #10B981;
+            margin-bottom: var(--space-md);
+        }
+
+        @media (max-width: 768px) {
+            .contact-wrapper { grid-template-columns: 1fr; }
+            .form-row { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <div id="nav-placeholder"></div>
+
+    <section class="page-header">
+        <div class="floating-shapes">
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+            <div class="floating-shape"></div>
+        </div>
+        <div class="container">
+            <div class="breadcrumb">
+                <a href="index.html">Home</a>
+                <span class="separator">/</span>
+                <span>Contact</span>
+            </div>
+            <h1>Get in Touch</h1>
+            <p>We'd love to hear from you — reach out anytime</p>
+        </div>
+    </section>
+
+    <!-- Contact Form & Info -->
+    <section class="section">
+        <div class="container">
+            <div class="contact-wrapper">
+                <!-- Info -->
+                <div class="contact-info-section reveal-left">
+                    <h2>Let's Talk</h2>
+                    <p>Have a question about an order, need product advice, or just want to say hello? We're here to help and typically respond within 24 hours.</p>
+
+                    <div class="contact-cards">
+                        <div class="contact-card glass-card">
+                            <div class="contact-card__icon" style="background:var(--gradient-primary);">
+                                <i class="ri-map-pin-2-line"></i>
+                            </div>
+                            <div>
+                                <h4>Our Office</h4>
+                                <p>1234 Commerce Blvd, Suite 200<br>San Francisco, CA 94102</p>
+                            </div>
+                        </div>
+                        <div class="contact-card glass-card">
+                            <div class="contact-card__icon" style="background:var(--gradient-mint);">
+                                <i class="ri-mail-send-line"></i>
+                            </div>
+                            <div>
+                                <h4>Email Us</h4>
+                                <a href="mailto:support@glasscart.com">support@glasscart.com</a><br>
+                                <a href="mailto:business@glasscart.com">business@glasscart.com</a>
+                            </div>
+                        </div>
+                        <div class="contact-card glass-card">
+                            <div class="contact-card__icon" style="background:var(--gradient-peach);">
+                                <i class="ri-phone-line"></i>
+                            </div>
+                            <div>
+                                <h4>Call Us</h4>
+                                <a href="tel:+18001234567">+1 (800) 123-4567</a>
+                                <p>Mon–Fri, 9am–6pm PST</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="social-row">
+                        <a href="#" aria-label="Twitter"><i class="ri-twitter-x-fill"></i></a>
+                        <a href="#" aria-label="Instagram"><i class="ri-instagram-fill"></i></a>
+                        <a href="#" aria-label="Facebook"><i class="ri-facebook-fill"></i></a>
+                        <a href="#" aria-label="LinkedIn"><i class="ri-linkedin-fill"></i></a>
+                        <a href="#" aria-label="YouTube"><i class="ri-youtube-fill"></i></a>
+                    </div>
+                </div>
+
+                <!-- Form -->
+                <div class="contact-form-card glass-card reveal-right" id="contactFormCard">
+                    <h3>Send Us a Message</h3>
+                    <form id="contactForm">
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cf-name">Full Name*</label>
+                                <input type="text" id="cf-name" placeholder="John Doe" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="cf-email">Email Address*</label>
+                                <input type="email" id="cf-email" placeholder="john@example.com" required>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="cf-phone">Phone (Optional)</label>
+                                <input type="tel" id="cf-phone" placeholder="+1 (555) 000-0000">
+                            </div>
+                            <div class="form-group">
+                                <label for="cf-subject">Subject*</label>
+                                <select id="cf-subject" required>
+                                    <option value="">Choose a topic</option>
+                                    <option value="order">Order Inquiry</option>
+                                    <option value="product">Product Question</option>
+                                    <option value="return">Returns & Refunds</option>
+                                    <option value="partnership">Business Partnership</option>
+                                    <option value="feedback">Feedback</option>
+                                    <option value="other">Other</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="cf-message">Message*</label>
+                            <textarea id="cf-message" placeholder="Tell us what's on your mind..." required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary contact-submit">
+                            <i class="ri-send-plane-2-line"></i> Send Message
+                        </button>
+                    </form>
+
+                    <div class="form-success" id="formSuccess">
+                        <i class="ri-checkbox-circle-line"></i>
+                        <h3>Message Sent!</h3>
+                        <p style="color:var(--text-secondary);margin-top:var(--space-sm);">Thank you for reaching out. We'll get back to you within 24 hours.</p>
+                        <button class="btn btn-outline" onclick="resetContactForm()" style="margin-top:var(--space-lg);">Send Another Message</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Map -->
+    <section class="section" style="padding-top:0;">
+        <div class="container">
+            <div class="map-section glass-card reveal-scale">
+                <div class="map-placeholder">
+                    <i class="ri-map-2-line"></i>
+                    <p>1234 Commerce Blvd, San Francisco, CA 94102</p>
+                    <a href="https://maps.google.com" target="_blank" class="btn btn-glass btn-sm" style="margin-top:var(--space-md);">
+                        <i class="ri-external-link-line"></i> Open in Maps
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="section" style="background:rgba(255,255,255,0.3);">
+        <div class="container">
+            <div class="section-header reveal">
+                <h2>Frequently Asked Questions</h2>
+                <p>Quick answers to common questions</p>
+            </div>
+            <div class="faq-list">
+                <div class="faq-item glass-card reveal delay-1">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What is your return policy?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We offer a 30-day hassle-free return policy. If you're not satisfied with your purchase, you can return it for a full refund or exchange. Items must be in their original condition with tags attached.</p>
+                    </div>
+                </div>
+                <div class="faq-item glass-card reveal delay-2">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How long does shipping take?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Standard shipping takes 5-7 business days. Express shipping (2-3 days) is available at checkout. International orders typically arrive within 7-14 business days depending on location.</p>
+                    </div>
+                </div>
+                <div class="faq-item glass-card reveal delay-3">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>Do you offer free shipping?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Yes! All orders over $100 qualify for free standard shipping within the United States. International free shipping is available on orders over $150.</p>
+                    </div>
+                </div>
+                <div class="faq-item glass-card reveal delay-4">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How can I track my order?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>Once your order ships, you'll receive a confirmation email with a tracking number. You can use this number on our website or the carrier's website to track your package in real time.</p>
+                    </div>
+                </div>
+                <div class="faq-item glass-card reveal delay-1">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>What payment methods do you accept?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>We accept Visa, MasterCard, American Express, PayPal, Apple Pay, and Google Pay. All transactions are secured with SSL encryption for your safety.</p>
+                    </div>
+                </div>
+                <div class="faq-item glass-card reveal delay-2">
+                    <div class="faq-question" onclick="toggleFAQ(this)">
+                        <span>How do I contact customer support?</span>
+                        <i class="ri-arrow-down-s-line"></i>
+                    </div>
+                    <div class="faq-answer">
+                        <p>You can reach us via the contact form above, email us at support@glasscart.com, or call us at +1 (800) 123-4567 during business hours (Mon-Fri, 9am-6pm PST).</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div id="footer-placeholder"></div>
+
+    <script src="js/products.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/ui.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            document.getElementById('nav-placeholder').innerHTML = getNavHTML() + getSearchOverlayCSS();
+            document.getElementById('footer-placeholder').innerHTML = getFooterHTML();
+            initNavbar(); initScrollTop(); initMobileMenu(); setActiveNavLink();
+            updateCartBadge(); updateWishlistBadge();
+            initScrollReveal();
+        });
+
+        // FAQ toggle
+        function toggleFAQ(el) {
+            const item = el.parentElement;
+            const wasActive = item.classList.contains('active');
+            document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('active'));
+            if (!wasActive) item.classList.add('active');
+        }
+
+        // Contact form
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            this.style.display = 'none';
+            document.querySelector('.contact-form-card h3').style.display = 'none';
+            document.getElementById('formSuccess').classList.add('show');
+            showToast('Message sent successfully!', 'success');
+        });
+
+        function resetContactForm() {
+            document.getElementById('contactForm').reset();
+            document.getElementById('contactForm').style.display = 'block';
+            document.querySelector('.contact-form-card h3').style.display = 'block';
+            document.getElementById('formSuccess').classList.remove('show');
+        }
+    </script>
+</body>
+</html>
