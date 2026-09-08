@@ -1,0 +1,14 @@
+/* Phase 2 shell only. Global GlassCart CSS is copied in Phase 3. */
+html,
+body,
+#root {
+  margin: 0;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+main {
+  padding: 2rem;
+}

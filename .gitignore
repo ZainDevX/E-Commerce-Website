@@ -19,3 +19,9 @@ node_modules/
 # Build
 dist/
 build/
+client/dist
+
+# Env (never commit secrets; keep *.example)
+.env
+.env.local
+.env.*.local
